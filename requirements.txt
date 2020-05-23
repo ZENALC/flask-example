@@ -5,3 +5,4 @@ flask-login
 flask_bcrypt
 wtforms
 wtforms[email]
+Pillow

@@ -1,5 +1,5 @@
 from flask_example import db, login_manager, app
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime
 from flask_login import UserMixin
 
@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
         s = Serializer(app.config['SECRET_KEY'])
         try:
             user_id = s.loads(token)['user_id']
-        except SignatureExpired:
+        except:
             return None
         return User.query.get(user_id)
 

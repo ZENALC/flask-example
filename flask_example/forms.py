@@ -1,9 +1,9 @@
-from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
-from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flask_example.models import User
+from flask_wtf import FlaskForm  # import flask form
+from flask_wtf.file import FileField, FileAllowed  # import fileField and validator fileAllowed
+from flask_login import current_user  # import current_user
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField  # import various fields
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError  # importing various validators
+from flask_example.models import User  # import User from models
 
 
 class RegistrationForm(FlaskForm):

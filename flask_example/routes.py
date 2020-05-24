@@ -11,8 +11,10 @@ from PIL import Image
 @app.route('/home/')
 @app.route('/')
 def home():  # view for home page
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    page = request.args.get('page', 1, type=int)  # get page arg or return 1 if None
+    posts = Post.query. \
+        order_by(Post.date_posted.desc()). \
+        paginate(page=page, per_page=5)
     return render_template('home.html', title='Home', posts=posts)
 
 
@@ -39,6 +41,7 @@ def register():  # view for register page
 @app.route('/login/', methods=['POST', 'GET'])
 def login():
     if current_user.is_authenticated:
+        flash("You are already logged in.", 'info')
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
@@ -55,6 +58,7 @@ def login():
 @app.route('/logout/')
 def logout():
     logout_user()
+    flash("You have logged out successfully.", 'info')
     return redirect(url_for('home'))
 
 
@@ -75,6 +79,9 @@ def save_picture(form_picture):
 @login_required
 @app.route('/account/', methods=['POST', 'GET'])
 def account():
+    if current_user.is_anonymous:
+        flash("You must log in to view account details.", 'info')
+        return redirect(url_for('login'))
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -95,6 +102,9 @@ def account():
 @login_required
 @app.route("/post/new", methods=['POST', 'GET'])
 def new_post():
+    if current_user.is_anonymous:
+        flash("You must log in to create a post.", 'info')
+        return redirect(url_for('login'))
     form = PostForm()
     if form.validate_on_submit():
         post = Post(title=form.title.data, content=form.content.data, author=current_user)
@@ -144,11 +154,9 @@ def delete_post(post_id):
 
 @app.route('/user/<string:username>')
 def user_posts(username):
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get('page', 1, type=int)  # get page or first page if None
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)\
-        .order_by(Post.date_posted.desc())\
+    posts = Post.query.filter_by(author=user) \
+        .order_by(Post.date_posted.desc()) \
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)
-
-

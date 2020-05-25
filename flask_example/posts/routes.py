@@ -21,13 +21,13 @@ def new_post():
         db.session.commit()
         flash("Your post has been created successfully!", 'success')
         return redirect(url_for('main.home'))
-    return render_template('create_post.html', title='New Post', form=form, legend="New Post")
+    return render_template('posts/create_post.html', title='New Post', form=form, legend="New Post")
 
 
 @posts.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+    return render_template('posts/post.html', title=post.title, post=post)
 
 
 @login_required
@@ -46,7 +46,7 @@ def update_post(post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('create_post.html', title='Edit Post', form=form, legend="Update Post")
+    return render_template('posts/create_post.html', title='Edit Post', form=form, legend="Update Post")
 
 
 @login_required

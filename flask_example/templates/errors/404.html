@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content-section">
+        <h3>Oops. Page not found (404).</h3>
+        <p>That page does not exist. Please try a different location.</p>
+        <a href="{{ url_for('main.home') }}">Go back to home</a>
+    </div>
+{% endblock content %}

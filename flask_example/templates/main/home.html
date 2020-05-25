@@ -6,7 +6,7 @@
         {% if current_user.is_anonymous %}
             <p>Why not login and create one? <a href="{{ url_for('users.login') }}">Login</a></p>
         {% else %}
-            <p>Why not create one? <a href="{{ url_for('posts.new_post') }}">Add post</a></p>
+            <p>Why not be the first person to create one? <a href="{{ url_for('posts.new_post') }}">Add post</a></p>
         {% endif %}
     {% else %}
         {% for post in posts.items %}

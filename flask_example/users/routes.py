@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_example import db, bcrypt
 from flask_example.models import User, Post
-from flask_example.users.utils import save_picture, send_reset_email
+from flask_example.users.utils import save_picture, send_reset_email, delete_picture
 from flask_example.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
 
@@ -57,6 +57,8 @@ def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
+            if current_user.image_file != 'default.jpg':
+                delete_picture(current_user.image_file)
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
         current_user.username = form.username.data

@@ -6,6 +6,11 @@ from flask_mail import Message
 from flask_example import mail
 
 
+def delete_picture(user_picture):
+    picture_path = os.path.join(current_app.root_path, 'static/profile_pics', user_picture)
+    os.remove(picture_path)
+
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)

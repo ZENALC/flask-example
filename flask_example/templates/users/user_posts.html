@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h5 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h5>
+    {% if current_user == user %}
+        <h5 class="mb-3">Your posts ({{ posts.total }})</h5>
+    {% else %}
+        <h5 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h5>
+    {% endif %}
     {% if posts.total == 0 %}
         {% if user != current_user %}
             <p>Looks like this user has not posted anything.</p>

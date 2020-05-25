@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if posts.items|length == 0 %}
+    {% if posts.total == 0 %}
         <h5>Looks like there are currently no posts.</h5>
         {% if current_user.is_anonymous %}
             <p>Why not login and create one? <a href="{{ url_for('users.login') }}">Login</a></p>

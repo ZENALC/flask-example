@@ -1,7 +1,16 @@
 import json
+import secrets
 
-with open('config.json', 'r') as f:
-    data = json.load(f)
+try:
+    with open('config.json', 'r') as f:
+        data = json.load(f)
+except FileNotFoundError:
+    data = {
+        'secret_key': secrets.token_hex(16),
+        'uri': 'sqlite:///blog.db',
+        'username': 'username@gmail.com',
+        'password': 'password'
+    }
 
 
 class Config:
